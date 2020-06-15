@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 /* eslint-disable dot-notation */
 /* eslint-disable computed-property-spacing */
 import axios from 'axios'
