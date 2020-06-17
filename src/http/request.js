@@ -1,5 +1,5 @@
+/* eslint-disable quotes */
 /* eslint-disable dot-notation */
-/* eslint-disable computed-property-spacing */
 import axios from 'axios'
 import { Message } from 'element-ui'
 
@@ -11,15 +11,14 @@ const service = axios.create({
 // 请求拦截
 service.interceptors.request.use(config => {
   console.log('请求被拦截')
-  // 存token
 
   if (config !== 'login') {
+    // 存token，获取token
     const token = localStorage.getItem('token')
     console.log(token)
     config.headers["Authorization"] = token
     console.log(config)
   }
-  // this.$store.dispatch('setToken', token)
   return config
 }, _error => {
   console.log(_error)
@@ -29,10 +28,9 @@ service.interceptors.request.use(config => {
 
 // 响应拦截
 service.interceptors.response.use(res => {
+  console.log('res删除状态码', res)
   console.log(res.data)
-  // console.log(this.ruleForm)
 
-  console.log(res)
   var { msg, status } = res.data.meta
   console.log(msg, status)
 
@@ -41,24 +39,38 @@ service.interceptors.response.use(res => {
     Promise.reject(msg)
   }
 
-  if (status === 200) {
-    const { token } = res.data.data
-    token && localStorage.setItem('token', token)
-    // 登录成功提示
-    Message({
-      message: msg,
-      type: 'success'
-    })
-    return {
-      flag: 1,
-      res: res
+  if (res.data.data && res.data.meta) {
+    // if (status === 200 || status === 201) {
+    if (status === 200) {
+      const { token } = res.data.data
+      token && localStorage.setItem('token', token)
+      // 登录成功提示
+      Message({
+        message: msg,
+        type: 'success'
+      })
+      return {
+        flag: 1,
+        msg: msg,
+        res: res
+      }
+    } else {
+      Message.error(msg)
+
+      Promise.reject(msg)
     }
   } else {
-    Message.error(msg)
-    return {
-      flag: 2,
-      msg: msg,
-      result: res
+    if (status === 200) {
+      Message({
+        message: msg,
+        type: 'success'
+      })
+      return {
+        flag: 1,
+        msg: msg
+      }
+    } else {
+      Message.error('参数有误，请检查')
     }
   }
 }, error => {

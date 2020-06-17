@@ -33,3 +33,43 @@ export function setUsers (v) {
     }
   })
 }
+
+// 修改用户状态
+export function alterUserState (v) {
+  return request({
+    url: `users/${v.id}/state/${v.mg_state}`,
+    method: 'put'
+  })
+}
+
+// 编辑用户信息
+export function compileUser (v) {
+  return request({
+    url: `users/${v.id}`,
+    method: 'put'
+  })
+}
+
+// 删除用户信息
+export function deleUser (vid) {
+  return request({
+    url: `users/${vid}`,
+    method: 'delete'
+  })
+}
+
+// 分配角色
+export function assignRoles () {
+  return request({
+    url: 'roles',
+    method: 'get'
+  })
+}
+
+// 查询
+export function assignRolesId () {
+  return request({
+    url: 'roles/:id',
+    method: ''
+  })
+}

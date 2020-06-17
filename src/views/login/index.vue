@@ -18,7 +18,6 @@
 </template>
 
 <script>
-// import { goLogin, getUsers } from '../../http/api'
 import { goLogin } from '../../http/api'
 
 export default {
@@ -44,7 +43,6 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          console.log('登录成功', this.ruleForm)
           const result = await goLogin(this.ruleForm)
           console.log(result)
           if (result.flag === 1) {
@@ -75,7 +73,7 @@ export default {
 }
 .login_box{
     width: 450px;height: 335px;
-    background-color: pink;
+    background-color: white;
 }
 .demo-ruleForm{
     margin: 120px 0px auto;
