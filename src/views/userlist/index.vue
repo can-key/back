@@ -86,7 +86,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisibles = false">取 消</el-button>
-                  <el-button type="primary" @click="dialogFormVisibles = false">确 定</el-button>
+                  <el-button type="primary" @click="allocationConfirm">确 定</el-button>
                 </div>
               </el-dialog>
               <!-- ======================================= -->
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { getUsers, setUsers, alterUserState, deleUser, assignRoles } from '../../http/api'
+import { getUsers, setUsers, alterUserState, deleUser, getAssignRoles } from '../../http/api'
 
 export default {
   data () {
@@ -167,9 +167,13 @@ export default {
       this.dialogFormVisibles = true
       const { username } = asasign
       this.assignRolesUsername = username
-      const assign = await assignRoles()
+      const assign = await getAssignRoles()
       console.log(assign.res.data.data)
       this.roles = assign.res.data.data
+    },
+    allocationConfirm () {
+      console.log(1111)
+      this.dialogFormVisibles = false
     },
     // 获取用户信息
     async getUsers () {

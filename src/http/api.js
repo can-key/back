@@ -59,7 +59,7 @@ export function deleUser (vid) {
 }
 
 // 分配角色
-export function assignRoles () {
+export function getAssignRoles () {
   return request({
     url: 'roles',
     method: 'get'
@@ -67,9 +67,16 @@ export function assignRoles () {
 }
 
 // 查询
-export function assignRolesId () {
+export function assignRolesId (id) {
   return request({
-    url: 'roles/:id',
+    url: `roles/${id}`,
+    method: ''
+  })
+}
+
+export function allocation (id) {
+  return request({
+    url: `users/${id}/role`,
     method: ''
   })
 }
